@@ -32,10 +32,10 @@ public class InputView {
     /**
      * 사용자가 이동할 칸을 입력받는다.
      */
-    public boolean readMoving() {
+    public String readMoving() {
         String input = Console.readLine();
         inputValidator.validateMoveText(input);
-        return inputParser.parseMove(input);
+        return input;
     }
 
     /**
