@@ -1,5 +1,6 @@
 package bridge.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,10 +8,17 @@ import java.util.List;
  */
 public class BridgeGame {
 
+    private static final String SAFE = "O";
+    private static final String FAIL = "X";
+    private static final int BRFORE_START = 0;
     private final List<String> bridge;
+    private final List<String> passedRoad;
+    private int retryCount;
 
     private BridgeGame(final List<String> bridge) {
+        this.passedRoad = new ArrayList<>();
         this.bridge = bridge;
+        retryCount = 0;
     }
 
     public static BridgeGame from(final List<String> bridge) {
@@ -23,8 +31,12 @@ public class BridgeGame {
      * <p>
      * 이동을 위해 필요한 메서드의 반환 타입(return type), 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
      */
-    public void move(final User user, final String moving) {
-        user.move(bridge, moving);
+    public void move(final String moving) {
+        if (bridge.get(getNextLocation()).equals(moving)) {
+            passedRoad.add(SAFE);
+            return;
+        }
+        passedRoad.add(FAIL);
     }
 
     /**
@@ -33,5 +45,21 @@ public class BridgeGame {
      * 재시작을 위해 필요한 메서드의 반환 타입(return type), 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
      */
     public void retry() {
+    }
+
+    public boolean isSuspend() {
+        return getCurrentLocation() >= BRFORE_START && passedRoad.get(getCurrentLocation()).equals(FAIL);
+    }
+
+    public boolean isClear() {
+        return passedRoad.size() == bridge.size() && passedRoad.get(getCurrentLocation()).equals(SAFE);
+    }
+
+    private int getCurrentLocation() {
+        return passedRoad.size() - 1;
+    }
+
+    private int getNextLocation() {
+        return passedRoad.size();
     }
 }

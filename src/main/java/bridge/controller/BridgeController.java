@@ -2,7 +2,7 @@ package bridge.controller;
 
 import bridge.domain.BridgeGame;
 import bridge.domain.BridgeMaker;
-import bridge.domain.User;
+import bridge.handler.RetryHandler;
 import bridge.view.InputView;
 import bridge.view.OutputView;
 import java.util.List;
@@ -11,27 +11,30 @@ public class BridgeController {
     private final InputView inputView;
     private final OutputView outputView;
     private final BridgeMaker bridgeMaker;
+    private final RetryHandler retryHandler;
 
-    public BridgeController(final InputView inputView, final OutputView outputView, final BridgeMaker bridgeMaker) {
+    public BridgeController(final InputView inputView, final OutputView outputView, final BridgeMaker bridgeMaker,
+                            final RetryHandler retryHandler) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.bridgeMaker = bridgeMaker;
+        this.retryHandler = retryHandler;
     }
 
     public void run() {
         outputView.printIntroduce();
         BridgeGame bridgeGame = makeBridgeGame();
-        User user = User.create();
+        playGame(bridgeGame);
     }
 
-    public void playGame(final BridgeGame bridgeGame, final User user){
-        moveUser(bridgeGame, user);
+    private void playGame(final BridgeGame bridgeGame) {
+        retryHandler.retryUntilSuspendOrClear(this::moveUser, bridgeGame::isSuspend, bridgeGame::isClear, bridgeGame);
     }
 
-    private void moveUser(final BridgeGame bridgeGame, final User user){
+    private void moveUser(final BridgeGame bridgeGame) {
         outputView.printMoveInput();
         String moving = inputView.readMoving();
-        bridgeGame.move(user, moving);
+        bridgeGame.move(moving);
     }
 
     private BridgeGame makeBridgeGame() {
