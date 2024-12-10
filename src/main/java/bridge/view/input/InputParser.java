@@ -5,6 +5,7 @@ import bridge.exception.CustomException;
 
 public class InputParser {
     private static final String MOVE_UP = "U";
+    private static final String SUSPEND_RESTART = "R";
 
     public int parseInt(final String input) {
         try {
@@ -18,4 +19,7 @@ public class InputParser {
         return MOVE_UP.equals(input);
     }
 
+    public boolean parseSuspend(final String input) {
+        return SUSPEND_RESTART.equals(input);
+    }
 }

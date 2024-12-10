@@ -7,8 +7,10 @@ import java.util.regex.Pattern;
 public class InputValidator {
     private static final String BRIDGE_DISTANCE_INPUT_PATTERN_REGEX = "^[0-9]*$";
     private static final String MOVE_INPUT_PATTERN_REGEX = "^[UD]$";
+    private static final String SUSPEND_INPUT_PATTERN_REGEX = "^[RQ]$";
     private static final Pattern BRIDGE_DISTANCE_INPUT_PATTERN = Pattern.compile(BRIDGE_DISTANCE_INPUT_PATTERN_REGEX);
     private static final Pattern MOVE_INPUT_PATTERN = Pattern.compile(MOVE_INPUT_PATTERN_REGEX);
+    private static final Pattern SUSPEND_INPUT_PATTERN = Pattern.compile(SUSPEND_INPUT_PATTERN_REGEX);
     private static final int BRIDGE_DISTANCE_MIN = 3;
     private static final int BRIDGE_DISTANCE_MAX = 20;
 
@@ -26,6 +28,12 @@ public class InputValidator {
     public void validateMoveText(final String moveText) {
         if (!MOVE_INPUT_PATTERN.matcher(moveText).matches()) {
             throw new CustomException(ErrorMessage.MOVE_INPUT_TEXT_INVALID);
+        }
+    }
+
+    public void validateSuspendText(final String suspendText) {
+        if (!SUSPEND_INPUT_PATTERN.matcher(suspendText).matches()) {
+            throw new CustomException(ErrorMessage.SUSPEND_INPUT_TEXT_INVALID);
         }
     }
 

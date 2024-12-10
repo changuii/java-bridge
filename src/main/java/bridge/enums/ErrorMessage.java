@@ -8,6 +8,8 @@ public enum ErrorMessage {
 
     MOVE_INPUT_TEXT_INVALID("U 또는 D를 입력하셔야 합니다."),
 
+    SUSPEND_INPUT_TEXT_INVALID("R 또는 Q를 입력하셔야 합니다."),
+
     TEXT_PARSE_INVALID("파싱하려는 문자가 잘못된 형태입니다.");
 
     private static final String ERROR_PREFIX = "[ERROR] ";
