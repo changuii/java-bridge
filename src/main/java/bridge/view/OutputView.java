@@ -28,7 +28,11 @@ public class OutputView {
     }
 
     public void printBridgeDistanceInput() {
-        print(OutputMessage.BRIDGE_INPUT);
+        print(OutputMessage.BRIDGE_DISTANCE_INPUT);
+    }
+
+    public void printMoveInput() {
+        print(OutputMessage.MOVE_INPUT);
     }
 
     public void printLineBreak() {
