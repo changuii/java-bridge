@@ -9,7 +9,9 @@ public enum OutputMessage {
     GAME_RESULT_INTRODUCE("최종 게임 결과"),
     GAME_RESULT_CLEAR("게임 성공 여부: %s"),
     GAME_SUCCESS("성공"),
-    GAME_FAIL("실패");
+    GAME_FAIL("실패"),
+    GAME_TRY_COUNT("총 시도한 횟수: %d");
+
     private final String message;
 
     OutputMessage(final String message) {

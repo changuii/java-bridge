@@ -43,6 +43,10 @@ public class OutputView {
         print(OutputMessage.GAME_RESULT_CLEAR, formatGameClear(gameClear));
     }
 
+    public void printGameResultTryCount(final int tryCount) {
+        print(OutputMessage.GAME_TRY_COUNT, tryCount);
+    }
+
     public void printLineBreak() {
         System.out.print(System.lineSeparator());
     }
