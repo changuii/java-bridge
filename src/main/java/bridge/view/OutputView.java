@@ -35,6 +35,10 @@ public class OutputView {
         print(OutputMessage.MOVE_INPUT);
     }
 
+    public void printGameResultIntroduce() {
+        print(OutputMessage.GAME_RESULT_INTRODUCE);
+    }
+
     public void printLineBreak() {
         System.out.print(System.lineSeparator());
     }
