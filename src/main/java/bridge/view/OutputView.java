@@ -27,6 +27,10 @@ public class OutputView {
         print(OutputMessage.BRIDGE_GAME_INTRODUCE);
     }
 
+    public void printBridgeDistanceInput() {
+        print(OutputMessage.BRIDGE_INPUT);
+    }
+
     public void printLineBreak() {
         System.out.print(System.lineSeparator());
     }
