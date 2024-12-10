@@ -39,8 +39,19 @@ public class OutputView {
         print(OutputMessage.GAME_RESULT_INTRODUCE);
     }
 
+    public void printGameResultClear(final boolean gameClear) {
+        print(OutputMessage.GAME_RESULT_CLEAR, formatGameClear(gameClear));
+    }
+
     public void printLineBreak() {
         System.out.print(System.lineSeparator());
+    }
+
+    private OutputMessage formatGameClear(final boolean gameClear) {
+        if (gameClear) {
+            return OutputMessage.GAME_SUCCESS;
+        }
+        return OutputMessage.GAME_FAIL;
     }
 
     private void print(Object message, Object... values) {
