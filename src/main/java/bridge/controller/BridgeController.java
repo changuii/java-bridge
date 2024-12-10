@@ -2,9 +2,9 @@ package bridge.controller;
 
 import bridge.domain.BridgeGame;
 import bridge.domain.BridgeMaker;
+import bridge.domain.User;
 import bridge.view.InputView;
 import bridge.view.OutputView;
-import java.util.ArrayList;
 import java.util.List;
 
 public class BridgeController {
@@ -20,8 +20,18 @@ public class BridgeController {
 
     public void run() {
         outputView.printIntroduce();
-        outputView.printLineBreak();
         BridgeGame bridgeGame = makeBridgeGame();
+        User user = User.create();
+    }
+
+    public void playGame(final BridgeGame bridgeGame, final User user){
+        moveUser(bridgeGame, user);
+    }
+
+    private void moveUser(final BridgeGame bridgeGame, final User user){
+        outputView.printMoveInput();
+        String moving = inputView.readMoving();
+        bridgeGame.move(user, moving);
     }
 
     private BridgeGame makeBridgeGame() {
