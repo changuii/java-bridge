@@ -7,10 +7,10 @@ import bridge.dto.MapDto;
 public class DtoConverter {
 
     public GameResultDto convertGameResultDto(final BridgeGame bridgeGame) {
-        return new GameResultDto(bridgeGame.isClear(), bridgeGame.getRetryCount());
+        return GameResultDto.of(bridgeGame.isClear(), bridgeGame.getRetryCount());
     }
 
     public MapDto convertMapDto(final BridgeGame bridgeGame) {
-        return new MapDto(bridgeGame.getBridge(), bridgeGame.getPassedRoad());
+        return MapDto.of(bridgeGame.getBridge(), bridgeGame.getPassedRoad());
     }
 }

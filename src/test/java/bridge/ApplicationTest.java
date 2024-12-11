@@ -7,8 +7,11 @@ import static org.assertj.core.util.Lists.newArrayList;
 
 import bridge.component.BridgeNumberGenerator;
 import bridge.domain.BridgeMaker;
+import camp.nextstep.edu.missionutils.Console;
 import camp.nextstep.edu.missionutils.test.NsTest;
+import java.io.IOException;
 import java.util.List;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 class ApplicationTest extends NsTest {

@@ -20,9 +20,9 @@ public class OutputView {
      */
     public void printMap(final MapDto mapDto) {
         print(OutputMessage.BRIDGE_STATE_FORMAT,
-                makeBridgeState(mapDto.bridge(), mapDto.passedRoad(), OutputMessage.UP_ROAD));
+                makeBridgeState(mapDto.getBridge(), mapDto.getPassedRoad(), OutputMessage.UP_ROAD));
         print(OutputMessage.BRIDGE_STATE_FORMAT,
-                makeBridgeState(mapDto.bridge(), mapDto.passedRoad(), OutputMessage.DOWN_ROAD));
+                makeBridgeState(mapDto.getBridge(), mapDto.getPassedRoad(), OutputMessage.DOWN_ROAD));
         printLineBreak();
     }
 
@@ -35,7 +35,7 @@ public class OutputView {
         printGameResultIntroduce();
         printMap(mapDto);
         printGameResultClear(gameResultDto.isClear());
-        printGameResultTryCount(gameResultDto.tryCount());
+        printGameResultTryCount(gameResultDto.getTryCount());
     }
 
     public void printIntroduce() {
