@@ -1,6 +1,7 @@
 package bridge.config;
 
 import bridge.component.BridgeRandomNumberGenerator;
+import bridge.component.DtoConverter;
 import bridge.controller.BridgeController;
 import bridge.domain.BridgeMaker;
 import bridge.handler.RetryHandler;
@@ -12,7 +13,8 @@ import bridge.view.input.InputValidator;
 public abstract class BridgeConfig {
 
     public static BridgeController createBridgeController() {
-        return new BridgeController(createInputView(), new OutputView(), createBridgeMaker(), new RetryHandler());
+        return new BridgeController(createInputView(), new OutputView(), createBridgeMaker(), new RetryHandler(),
+                new DtoConverter());
     }
 
     private static InputView createInputView() {

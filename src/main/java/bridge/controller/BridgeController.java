@@ -1,5 +1,6 @@
 package bridge.controller;
 
+import bridge.component.DtoConverter;
 import bridge.domain.BridgeGame;
 import bridge.domain.BridgeMaker;
 import bridge.handler.RetryHandler;
@@ -12,21 +13,22 @@ public class BridgeController {
     private final OutputView outputView;
     private final BridgeMaker bridgeMaker;
     private final RetryHandler retryHandler;
+    private final DtoConverter dtoConverter;
 
     public BridgeController(final InputView inputView, final OutputView outputView, final BridgeMaker bridgeMaker,
-                            final RetryHandler retryHandler) {
+                            final RetryHandler retryHandler, final DtoConverter dtoConverter) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.bridgeMaker = bridgeMaker;
         this.retryHandler = retryHandler;
+        this.dtoConverter = dtoConverter;
     }
 
     public void run() {
         outputView.printIntroduce();
         BridgeGame bridgeGame = makeBridgeGame();
         retryHandler.retryUntilSuspendOrClear(this::playGame, bridgeGame::isSuspend, bridgeGame::isClear, bridgeGame);
-        outputView.printResult(bridgeGame.getBridge(), bridgeGame.getPassedRoad(), bridgeGame.isClear(),
-                bridgeGame.getRetryCount());
+        outputView.printResult(dtoConverter.convertMapDto(bridgeGame), dtoConverter.convertGameResultDto(bridgeGame));
     }
 
     private void playGame(final BridgeGame bridgeGame) {
@@ -40,7 +42,7 @@ public class BridgeController {
         outputView.printMoveInput();
         String moving = inputView.readMoving();
         bridgeGame.move(moving);
-        outputView.printMap(bridgeGame.getBridge(), bridgeGame.getPassedRoad());
+        outputView.printMap(dtoConverter.convertMapDto(bridgeGame));
     }
 
     private void retry(final BridgeGame bridgeGame) {

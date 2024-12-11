@@ -1,5 +1,7 @@
 package bridge.view;
 
+import bridge.dto.GameResultDto;
+import bridge.dto.MapDto;
 import bridge.enums.OutputMessage;
 import bridge.exception.CustomException;
 import java.util.List;
@@ -22,10 +24,42 @@ public class OutputView {
      * <p>
      * 출력을 위해 필요한 메서드의 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
      */
-    public void printMap(final List<String> bridge, final List<String> passedRoad) {
-        print(BRIDGE_STATE_FORMAT, makeBridgeState(bridge, passedRoad, UP_ROAD));
-        print(BRIDGE_STATE_FORMAT, makeBridgeState(bridge, passedRoad, DOWN_ROAD));
+    public void printMap(final MapDto mapDto) {
+        print(BRIDGE_STATE_FORMAT, makeBridgeState(mapDto.bridge(), mapDto.passedRoad(), UP_ROAD));
+        print(BRIDGE_STATE_FORMAT, makeBridgeState(mapDto.bridge(), mapDto.passedRoad(), DOWN_ROAD));
         printLineBreak();
+    }
+
+    /**
+     * 게임의 최종 결과를 정해진 형식에 맞춰 출력한다.
+     * <p>
+     * 출력을 위해 필요한 메서드의 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
+     */
+    public void printResult(final MapDto mapDto, final GameResultDto gameResultDto) {
+        printGameResultIntroduce();
+        printMap(mapDto);
+        printGameResultClear(gameResultDto.isClear());
+        printGameResultTryCount(gameResultDto.tryCount());
+    }
+
+    public void printIntroduce() {
+        print(OutputMessage.BRIDGE_GAME_INTRODUCE);
+    }
+
+    public void printBridgeDistanceInput() {
+        print(OutputMessage.BRIDGE_DISTANCE_INPUT);
+    }
+
+    public void printMoveInput() {
+        print(OutputMessage.MOVE_INPUT);
+    }
+
+    public void printRetryInput() {
+        print(OutputMessage.RETRY_INPUT);
+    }
+
+    public void printErrorMessage(final CustomException customException) {
+        print(customException.getMessage());
     }
 
     private String makeBridgeState(final List<String> bridge, final List<String> passedRoad, final String roadType) {
@@ -47,39 +81,6 @@ public class OutputView {
         return EMPTY_ROAD;
     }
 
-    private String format(final String format, final Object values) {
-        return String.format(format, values);
-    }
-
-    /**
-     * 게임의 최종 결과를 정해진 형식에 맞춰 출력한다.
-     * <p>
-     * 출력을 위해 필요한 메서드의 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
-     */
-    public void printResult(final List<String> bridge, final List<String> passedRoad, final boolean gameClear,
-                            final int tryCount) {
-        printGameResultIntroduce();
-        printMap(bridge, passedRoad);
-        printGameResultClear(gameClear);
-        printGameResultTryCount(tryCount);
-    }
-
-    public void printIntroduce() {
-        print(OutputMessage.BRIDGE_GAME_INTRODUCE);
-    }
-
-    public void printBridgeDistanceInput() {
-        print(OutputMessage.BRIDGE_DISTANCE_INPUT);
-    }
-
-    public void printMoveInput() {
-        print(OutputMessage.MOVE_INPUT);
-    }
-
-    public void printRetryInput() {
-        print(OutputMessage.RETRY_INPUT);
-    }
-
     private void printGameResultIntroduce() {
         print(OutputMessage.GAME_RESULT_INTRODUCE);
     }
@@ -92,11 +93,7 @@ public class OutputView {
         print(OutputMessage.GAME_TRY_COUNT, tryCount);
     }
 
-    public void printErrorMessage(final CustomException customException) {
-        print(customException.getMessage());
-    }
-
-    public void printLineBreak() {
+    private void printLineBreak() {
         System.out.print(System.lineSeparator());
     }
 
@@ -109,5 +106,9 @@ public class OutputView {
 
     private void print(Object message, Object... values) {
         System.out.println(String.format(message.toString(), values));
+    }
+
+    private String format(final String format, final Object values) {
+        return String.format(format, values);
     }
 }
