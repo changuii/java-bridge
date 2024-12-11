@@ -18,7 +18,7 @@ public class BridgeGame {
     private BridgeGame(final List<String> bridge) {
         this.passedRoad = new ArrayList<>();
         this.bridge = bridge;
-        retryCount = 0;
+        retryCount = 1;
     }
 
     public static BridgeGame from(final List<String> bridge) {
@@ -71,5 +71,9 @@ public class BridgeGame {
 
     public List<String> getPassedRoad() {
         return passedRoad;
+    }
+
+    public int getRetryCount() {
+        return retryCount;
     }
 }

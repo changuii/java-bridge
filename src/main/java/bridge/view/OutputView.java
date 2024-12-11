@@ -25,6 +25,7 @@ public class OutputView {
     public void printMap(final List<String> bridge, final List<String> passedRoad) {
         print(BRIDGE_STATE_FORMAT, makeBridgeState(bridge, passedRoad, UP_ROAD));
         print(BRIDGE_STATE_FORMAT, makeBridgeState(bridge, passedRoad, DOWN_ROAD));
+        printLineBreak();
     }
 
     private String makeBridgeState(final List<String> bridge, final List<String> passedRoad, final String roadType) {
@@ -55,7 +56,12 @@ public class OutputView {
      * <p>
      * 출력을 위해 필요한 메서드의 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
      */
-    public void printResult() {
+    public void printResult(final List<String> bridge, final List<String> passedRoad, final boolean gameClear,
+                            final int tryCount) {
+        printGameResultIntroduce();
+        printMap(bridge, passedRoad);
+        printGameResultClear(gameClear);
+        printGameResultTryCount(tryCount);
     }
 
     public void printIntroduce() {
@@ -74,15 +80,15 @@ public class OutputView {
         print(OutputMessage.RETRY_INPUT);
     }
 
-    public void printGameResultIntroduce() {
+    private void printGameResultIntroduce() {
         print(OutputMessage.GAME_RESULT_INTRODUCE);
     }
 
-    public void printGameResultClear(final boolean gameClear) {
+    private void printGameResultClear(final boolean gameClear) {
         print(OutputMessage.GAME_RESULT_CLEAR, formatGameClear(gameClear));
     }
 
-    public void printGameResultTryCount(final int tryCount) {
+    private void printGameResultTryCount(final int tryCount) {
         print(OutputMessage.GAME_TRY_COUNT, tryCount);
     }
 
