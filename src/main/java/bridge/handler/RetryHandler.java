@@ -1,7 +1,9 @@
 package bridge.handler;
 
+import bridge.exception.CustomException;
 import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class RetryHandler {
 
@@ -12,9 +14,13 @@ public class RetryHandler {
         }
     }
 
-    public <T> void retryUntilTrue(final Consumer<T> logic, final BooleanSupplier flag, final T data) {
-        while (flag.getAsBoolean()) {
-            logic.accept(data);
+    public <T> T retryUntilNotException(final Supplier<T> logic, final Consumer<CustomException> exceptionCallback) {
+        while (true) {
+            try {
+                return logic.get();
+            } catch (CustomException e) {
+                exceptionCallback.accept(e);
+            }
         }
     }
 }

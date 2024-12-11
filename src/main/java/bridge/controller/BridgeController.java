@@ -7,6 +7,7 @@ import bridge.handler.RetryHandler;
 import bridge.view.InputView;
 import bridge.view.OutputView;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class BridgeController {
     private final InputView inputView;
@@ -40,14 +41,14 @@ public class BridgeController {
 
     private void move(final BridgeGame bridgeGame) {
         outputView.printMoveInput();
-        String moving = inputView.readMoving();
+        String moving = handleInputException(inputView::readMoving);
         bridgeGame.move(moving);
         outputView.printMap(dtoConverter.convertMapDto(bridgeGame));
     }
 
     private void retry(final BridgeGame bridgeGame) {
         outputView.printRetryInput();
-        boolean retryCommand = inputView.readGameCommand();
+        boolean retryCommand = handleInputException(inputView::readGameCommand);
         if (retryCommand) {
             bridgeGame.retry();
         }
@@ -55,9 +56,13 @@ public class BridgeController {
 
     private BridgeGame makeBridgeGame() {
         outputView.printBridgeDistanceInput();
-        int bridgeDistance = inputView.readBridgeSize();
+        int bridgeDistance = handleInputException(inputView::readBridgeSize);
         List<String> bridge = bridgeMaker.makeBridge(bridgeDistance);
         return BridgeGame.from(bridge);
+    }
+
+    private <T> T handleInputException(final Supplier<T> input) {
+        return retryHandler.retryUntilNotException(input, outputView::printErrorMessage);
     }
 
 }
