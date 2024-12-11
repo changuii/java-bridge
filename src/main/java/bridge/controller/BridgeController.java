@@ -28,13 +28,14 @@ public class BridgeController {
     }
 
     private void playGame(final BridgeGame bridgeGame) {
-        retryHandler.retryUntilSuspendOrClear(this::moveUser, bridgeGame::isSuspend, bridgeGame::isClear, bridgeGame);
+        retryHandler.retryUntilSuspendOrClear(this::move, bridgeGame::isSuspend, bridgeGame::isClear, bridgeGame);
     }
 
-    private void moveUser(final BridgeGame bridgeGame) {
+    private void move(final BridgeGame bridgeGame) {
         outputView.printMoveInput();
         String moving = inputView.readMoving();
         bridgeGame.move(moving);
+        outputView.printMap(bridgeGame.getBridge(), bridgeGame.getPassedRoad());
     }
 
     private BridgeGame makeBridgeGame() {

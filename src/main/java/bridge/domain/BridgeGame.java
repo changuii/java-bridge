@@ -62,4 +62,12 @@ public class BridgeGame {
     private int getNextLocation() {
         return passedRoad.size();
     }
+
+    public List<String> getBridge() {
+        return bridge;
+    }
+
+    public List<String> getPassedRoad() {
+        return passedRoad;
+    }
 }
