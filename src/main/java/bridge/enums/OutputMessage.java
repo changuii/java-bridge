@@ -11,7 +11,14 @@ public enum OutputMessage {
     GAME_RESULT_CLEAR("게임 성공 여부: %s"),
     GAME_SUCCESS("성공"),
     GAME_FAIL("실패"),
-    GAME_TRY_COUNT("총 시도한 횟수: %d");
+    GAME_TRY_COUNT("총 시도한 횟수: %d"),
+
+    ROAD_STATE_FORMAT(" %s "),
+    BRIDGE_STATE_FORMAT("[%s]"),
+    UP_ROAD("U"),
+    DOWN_ROAD("D"),
+    EMPTY_ROAD("   "),
+    BRIDGE_STATE_DELIMITER("|");
 
     private final String message;
 

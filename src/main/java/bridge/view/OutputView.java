@@ -12,12 +12,6 @@ import java.util.stream.IntStream;
  * 사용자에게 게임 진행 상황과 결과를 출력하는 역할을 한다.
  */
 public class OutputView {
-    private static final String ROAD_STATE_FORMAT = " %s ";
-    private static final String BRIDGE_STATE_FORMAT = "[%s]";
-    private static final String UP_ROAD = "U";
-    private static final String DOWN_ROAD = "D";
-    private static final String EMPTY_ROAD = "   ";
-    private static final String BRIDGE_STATE_DELIEMETER = "|";
 
     /**
      * 현재까지 이동한 다리의 상태를 정해진 형식에 맞춰 출력한다.
@@ -25,8 +19,10 @@ public class OutputView {
      * 출력을 위해 필요한 메서드의 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
      */
     public void printMap(final MapDto mapDto) {
-        print(BRIDGE_STATE_FORMAT, makeBridgeState(mapDto.bridge(), mapDto.passedRoad(), UP_ROAD));
-        print(BRIDGE_STATE_FORMAT, makeBridgeState(mapDto.bridge(), mapDto.passedRoad(), DOWN_ROAD));
+        print(OutputMessage.BRIDGE_STATE_FORMAT,
+                makeBridgeState(mapDto.bridge(), mapDto.passedRoad(), OutputMessage.UP_ROAD));
+        print(OutputMessage.BRIDGE_STATE_FORMAT,
+                makeBridgeState(mapDto.bridge(), mapDto.passedRoad(), OutputMessage.DOWN_ROAD));
         printLineBreak();
     }
 
@@ -62,23 +58,24 @@ public class OutputView {
         print(customException.getMessage());
     }
 
-    private String makeBridgeState(final List<String> bridge, final List<String> passedRoad, final String roadType) {
+    private String makeBridgeState(final List<String> bridge, final List<String> passedRoad,
+                                   final OutputMessage roadType) {
         return IntStream.range(0, passedRoad.size())
-                .mapToObj(i -> bridgeAndRoadToState(bridge.get(i), passedRoad.get(i), roadType))
-                .collect(Collectors.joining(BRIDGE_STATE_DELIEMETER));
+                .mapToObj(i -> bridgeAndRoadToState(bridge.get(i), passedRoad.get(i), roadType.toString()))
+                .collect(Collectors.joining(OutputMessage.BRIDGE_STATE_DELIMITER.toString()));
     }
 
     private String bridgeAndRoadToState(final String nowBridge, final String nowRoad, final String roadType) {
         if (nowBridge.equals(roadType)) {
             if (nowRoad.equals("X")) {
-                return EMPTY_ROAD;
+                return format(OutputMessage.EMPTY_ROAD);
             }
-            return format(ROAD_STATE_FORMAT, nowRoad);
+            return format(OutputMessage.ROAD_STATE_FORMAT, nowRoad);
         }
         if (nowRoad.equals("X")) {
-            return format(ROAD_STATE_FORMAT, nowRoad);
+            return format(OutputMessage.ROAD_STATE_FORMAT, nowRoad);
         }
-        return EMPTY_ROAD;
+        return format(OutputMessage.EMPTY_ROAD);
     }
 
     private void printGameResultIntroduce() {
@@ -108,7 +105,7 @@ public class OutputView {
         System.out.println(String.format(message.toString(), values));
     }
 
-    private String format(final String format, final Object values) {
-        return String.format(format, values);
+    private String format(final Object format, final Object... values) {
+        return String.format(format.toString(), values);
     }
 }
