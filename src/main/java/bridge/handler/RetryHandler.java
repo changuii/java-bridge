@@ -11,4 +11,10 @@ public class RetryHandler {
             logic.accept(data);
         }
     }
+
+    public <T> void retryUntilTrue(final Consumer<T> logic, final BooleanSupplier flag, final T data) {
+        while (flag.getAsBoolean()) {
+            logic.accept(data);
+        }
+    }
 }

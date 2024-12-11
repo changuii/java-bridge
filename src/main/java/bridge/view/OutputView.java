@@ -35,12 +35,12 @@ public class OutputView {
 
     private String bridgeAndRoadToState(final String nowBridge, final String nowRoad, final String roadType) {
         if (nowBridge.equals(roadType)) {
-            if(nowRoad.equals("X")){
+            if (nowRoad.equals("X")) {
                 return EMPTY_ROAD;
             }
             return format(ROAD_STATE_FORMAT, nowRoad);
         }
-        if(nowRoad.equals("X")){
+        if (nowRoad.equals("X")) {
             return format(ROAD_STATE_FORMAT, nowRoad);
         }
         return EMPTY_ROAD;
@@ -68,6 +68,10 @@ public class OutputView {
 
     public void printMoveInput() {
         print(OutputMessage.MOVE_INPUT);
+    }
+
+    public void printRetryInput() {
+        print(OutputMessage.RETRY_INPUT);
     }
 
     public void printGameResultIntroduce() {

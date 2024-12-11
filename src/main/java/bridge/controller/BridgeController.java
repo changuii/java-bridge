@@ -24,11 +24,12 @@ public class BridgeController {
     public void run() {
         outputView.printIntroduce();
         BridgeGame bridgeGame = makeBridgeGame();
-        playGame(bridgeGame);
+        retryHandler.retryUntilSuspendOrClear(this::playGame, bridgeGame::isSuspend, bridgeGame::isClear, bridgeGame);
     }
 
     private void playGame(final BridgeGame bridgeGame) {
         retryHandler.retryUntilSuspendOrClear(this::move, bridgeGame::isSuspend, bridgeGame::isClear, bridgeGame);
+        retry(bridgeGame);
     }
 
     private void move(final BridgeGame bridgeGame) {
@@ -36,6 +37,14 @@ public class BridgeController {
         String moving = inputView.readMoving();
         bridgeGame.move(moving);
         outputView.printMap(bridgeGame.getBridge(), bridgeGame.getPassedRoad());
+    }
+
+    private void retry(final BridgeGame bridgeGame) {
+        outputView.printRetryInput();
+        boolean retryCommand = inputView.readGameCommand();
+        if(retryCommand){
+            bridgeGame.retry();
+        }
     }
 
     private BridgeGame makeBridgeGame() {
